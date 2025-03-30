@@ -87,10 +87,16 @@
 
     function aggiornaOrologio() {
       const now = new Date();
-      const opzioniData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById("data").textContent = now.toLocaleDateString('it-IT', opzioniData);
-      document.getElementById("ora").textContent = now.toLocaleTimeString('it-IT');
+      const opzioniData = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      document.getElementById("data").textContent = now.toLocaleDateString('it-IT', { ...opzioniData, timeZone: 'Europe/Rome' });
+      document.getElementById("ora").textContent = now.toLocaleTimeString('it-IT', { timeZone: 'Europe/Rome' });
     }
+
     setInterval(aggiornaOrologio, 1000);
     aggiornaOrologio();
 
