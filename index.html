@@ -14,24 +14,24 @@
       background: url('sorrento_bg.jpg') no-repeat center center fixed;
       background-size: cover;
       text-shadow: 1px 1px 4px #000;
+      overflow: hidden;
     }
 
     .container {
-      background-color: rgba(0, 0, 0, 0.35);
-      padding: 60px 40px;
-      border-radius: 30px;
-      max-width: 90%;
-      margin: 5% auto;
+      padding: 40px 20px 20px;
+      max-width: 100%;
+      height: 100%;
       text-align: center;
-      box-shadow: 0 6px 30px rgba(0,0,0,0.4);
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .logo {
-      width: 140px;
+      width: 120px;
       position: absolute;
-      top: 30px;
-      right: 30px;
+      top: 20px;
+      right: 20px;
       opacity: 0.95;
     }
 
@@ -44,17 +44,29 @@
 
     .clock {
       font-size: 20px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
-    .meteo, .info, .extra {
+    .meteo, .extra {
       font-size: 18px;
-      margin: 20px auto;
-      line-height: 1.6;
+      margin: 10px auto;
+      line-height: 1.5;
     }
 
     .meteo .day {
-      margin-top: 10px;
+      margin-top: 5px;
+    }
+
+    .qr-code {
+      margin-top: 25px;
+    }
+
+    .qr-code img {
+      width: 140px;
+      height: auto;
+      border-radius: 12px;
+      background: white;
+      padding: 6px;
     }
   </style>
 </head>
@@ -68,9 +80,9 @@
     <div class="meteo" id="meteoAttuale">☁️ Caricamento meteo...</div>
     <div class="meteo" id="meteoGiorni"></div>
 
-    <div class="info">
-      Wi-Fi: Casa Riva Sorrento<br>
-      Password: Riva2025@
+    <div class="qr-code">
+      <img src="wifi_qr.png" alt="QR Wi-Fi">
+      <div style="margin-top:6px;">Scansiona per collegarti al Wi-Fi</div>
     </div>
 
     <div class="extra">
@@ -87,10 +99,16 @@
 
     function aggiornaOrologio() {
       const now = new Date();
-      const opzioniData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById("data").textContent = now.toLocaleDateString('it-IT', opzioniData);
-      document.getElementById("ora").textContent = now.toLocaleTimeString('it-IT');
+      const opzioniData = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      document.getElementById("data").textContent = now.toLocaleDateString('it-IT', { ...opzioniData, timeZone: 'Europe/Rome' });
+      document.getElementById("ora").textContent = now.toLocaleTimeString('it-IT', { timeZone: 'Europe/Rome' });
     }
+
     setInterval(aggiornaOrologio, 1000);
     aggiornaOrologio();
 
