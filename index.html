@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Benvenuto a Casa Riva</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: white;
+      background: url('sorrento_bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.35);
+      padding: 60px 40px;
+      border-radius: 30px;
+      max-width: 90%;
+      margin: 5% auto;
+      text-align: center;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.4);
+      position: relative;
+    }
+
+    .logo {
+      width: 140px;
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      opacity: 0.95;
+    }
+
+    h1 {
+      font-size: 46px;
+      font-weight: 300;
+      margin-bottom: 15px;
+      line-height: 1.3;
+    }
+
+    .clock {
+      font-size: 20px;
+      margin-bottom: 25px;
+    }
+
+    .meteo, .info, .extra {
+      font-size: 18px;
+      margin: 20px auto;
+      line-height: 1.6;
+    }
+
+    .meteo .day {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="logo" src="logo_casa_riva_bianco.png" alt="Logo Casa Riva" />
+    <h1>Benvenuto,<br><span id="nomeCliente">Ospite</span></h1>
+    <div class="clock">
+      <span id="data"></span> | <span id="ora"></span>
+    </div>
+    <div class="meteo" id="meteoAttuale">☁️ Caricamento meteo...</div>
+    <div class="meteo" id="meteoGiorni"></div>
+
+    <div class="info">
+      Wi-Fi: Casa Riva Sorrento<br>
+      Password: Riva2025@
+    </div>
+
+    <div class="extra">
+      Sapevi che Sorrento ha ispirato la celebre canzone “Torna a Surriento”?
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get('nome');
+    if (nome) {
+      document.getElementById("nomeCliente").textContent = nome;
+    }
+
+    function aggiornaOrologio() {
+      const now = new Date();
+      const opzioniData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById("data").textContent = now.toLocaleDateString('it-IT', opzioniData);
+      document.getElementById("ora").textContent = now.toLocaleTimeString('it-IT');
+    }
+    setInterval(aggiornaOrologio, 1000);
+    aggiornaOrologio();
+
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=40.63&longitude=14.38&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FRome")
+      .then(res => res.json())
+      .then(data => {
+        const attuale = data.current_weather;
+        const daily = data.daily;
+        const giorni = daily.time;
+        const meteoContainer = document.getElementById("meteoGiorni");
+
+        document.getElementById("meteoAttuale").innerHTML = `🌡️ ${attuale.temperature}°C adesso`;
+
+        for (let i = 1; i < 4; i++) {
+          const day = new Date(giorni[i]).toLocaleDateString('it-IT', { weekday: 'long' });
+          const max = daily.temperature_2m_max[i];
+          const min = daily.temperature_2m_min[i];
+          const codice = daily.weathercode[i];
+          const emoji = codice < 3 ? "☀️" : codice < 5 ? "⛅" : "🌧️";
+          meteoContainer.innerHTML += `<div class="day">${emoji} ${day}: ${min}°C / ${max}°C</div>`;
+        }
+      })
+      .catch(() => {
+        document.getElementById("meteoAttuale").textContent = "🌦️ Meteo non disponibile";
+      });
+  </script>
+</body>
+</html>
