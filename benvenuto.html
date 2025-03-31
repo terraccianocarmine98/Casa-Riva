@@ -1,10 +1,136 @@
+
 <!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta http-equiv="refresh" content="0; URL='https://casariva.netlify.app?nome=Vincenzo%20Galiano'" />
-    <title>Benvenuto</title>
-  </head>
-  <body style="background-color:#000;color:#fff;text-align:center;padding-top:20%;">
-    <p>Reindirizzamento in corso...</p>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Benvenuto a Casa Riva</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: url('sorrento_bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 1;
+  pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 60px 20px;
+      color: white;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .logo {
+      width: 180px;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      opacity: 1;
+    }
+
+    h1 {
+      font-size: 46px;
+      font-weight: 300;
+      margin-bottom: 15px;
+    }
+
+    .clock {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .meteo, .qr-code {
+      font-size: 18px;
+      margin: 10px auto;
+    }
+
+    .qr-code img {
+      width: 140px;
+      background: white;
+      padding: 6px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="container">
+    <img class="logo" src="logo_casa_riva_bianco.png" alt="Logo Casa Riva" />
+    <h1>Benvenuto,<br><span id="nomeCliente">Ospite</span></h1>
+    <div class="clock">
+      <span id="data"></span> | <span id="ora"></span>
+    </div>
+    <div class="meteo" id="meteoAttuale">☁️ Caricamento meteo...</div>
+    <div class="meteo" id="meteoGiorni"></div>
+    <div class="qr-code">
+      <img src="wifi_qr.png" alt="QR Wi-Fi">
+      <div style="margin-top:6px;">Scansiona per collegarti al Wi-Fi</div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get('nome');
+    if (nome) {
+      document.getElementById("nomeCliente").textContent = nome;
+    }
+
+    function aggiornaOrologio() {
+      const now = new Date();
+      const opzioniData = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      document.getElementById("data").textContent = now.toLocaleDateString('it-IT', { ...opzioniData, timeZone: 'Europe/Rome' });
+      document.getElementById("ora").textContent = now.toLocaleTimeString('it-IT', { timeZone: 'Europe/Rome' });
+    }
+
+    setInterval(aggiornaOrologio, 1000);
+    aggiornaOrologio();
+
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=40.63&longitude=14.38&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FRome")
+      .then(res => res.json())
+      .then(data => {
+        const attuale = data.current_weather;
+        const daily = data.daily;
+        const giorni = daily.time;
+        const meteoContainer = document.getElementById("meteoGiorni");
+
+        document.getElementById("meteoAttuale").innerHTML = `🌡️ ${attuale.temperature}°C adesso`;
+
+        for (let i = 1; i < 4; i++) {
+          const day = new Date(giorni[i]).toLocaleDateString('it-IT', { weekday: 'long' });
+          const max = daily.temperature_2m_max[i];
+          const min = daily.temperature_2m_min[i];
+          const codice = daily.weathercode[i];
+          const emoji = codice < 3 ? "☀️" : codice < 5 ? "⛅" : "🌧️";
+          meteoContainer.innerHTML += `<div class="day">${emoji} ${day}: ${min}°C / ${max}°C</div>`;
+        }
+      })
+      .catch(() => {
+        document.getElementById("meteoAttuale").textContent = "🌦️ Meteo non disponibile";
+      });
+  </script>
+</body>
 </html>
