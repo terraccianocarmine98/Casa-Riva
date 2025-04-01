@@ -20,8 +20,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      height: 100vh;
-      width: 100vw;
+      height: 100%;
+      width: 100%;
       background-color: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(3px);
       z-index: 1;
@@ -30,9 +30,9 @@
     .container {
       position: relative;
       z-index: 2;
-      height: 100vh;
-      width: 100vw;
-      padding: 20px 30px;
+      height: 100%;
+      width: 100%;
+      padding: 40px 60px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -43,31 +43,32 @@
     }
 
     .logo {
-      width: 120px;
+      width: 100px;
       position: fixed;
-      top: 10px;
-      right: 10px;
+      top: 20px;
+      right: 20px;
       z-index: 3;
     }
 
     h1 {
-      font-size: 36px;
+      font-size: 34px;
       font-weight: 300;
-      margin: 0 0 8px 0;
+      margin: 0 0 6px 0;
     }
 
     .clock, .meteo {
-      font-size: 16px;
+      font-size: 15px;
       margin: 2px 0;
     }
 
     .sections {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: flex-start;
       width: 100%;
-      max-width: 1000px;
-      gap: 20px;
+      max-width: 900px;
+      gap: 40px;
+      margin-top: 10px;
     }
 
     .section {
@@ -76,13 +77,13 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(5px);
       border-radius: 12px;
-      padding: 14px 20px;
+      padding: 12px 20px;
       color: #fff9e6;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .section img.qr {
-      width: 90px;
+      width: 85px;
       margin-top: 6px;
       background: white;
       border-radius: 10px;
@@ -90,7 +91,7 @@
     }
 
     .kaftans-logo {
-      width: 120px;
+      width: 100px;
       margin-bottom: 8px;
     }
 
@@ -102,6 +103,7 @@
     .footer {
       font-size: 12px;
       opacity: 0.7;
+      margin-top: 10px;
     }
   </style>
 </head>
