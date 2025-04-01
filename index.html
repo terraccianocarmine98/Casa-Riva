@@ -25,7 +25,6 @@
       background-color: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(3px);
       z-index: 1;
-      pointer-events: none;
     }
 
     .container {
@@ -33,62 +32,58 @@
       z-index: 2;
       height: 100vh;
       width: 100vw;
-      padding: 20px 40px 20px 40px;
+      padding: 20px;
       box-sizing: border-box;
-      color: white;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
       text-align: center;
+      color: white;
     }
 
     .logo {
-      width: 160px;
+      width: 120px;
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 10px;
+      right: 10px;
       z-index: 3;
     }
 
-    .header {
-      margin-top: 40px;
-    }
-
     h1 {
-      font-size: 50px;
+      font-size: 36px;
       font-weight: 300;
-      margin: 0 0 10px 0;
+      margin: 0 0 6px 0;
     }
 
     .clock, .meteo {
-      font-size: 20px;
-      margin: 4px 0;
+      font-size: 16px;
+      margin: 2px 0;
     }
 
     .section {
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(8px);
-      border-radius: 16px;
-      padding: 16px 24px;
-      margin: 10px 0;
+      backdrop-filter: blur(5px);
+      border-radius: 12px;
+      padding: 10px 16px;
       width: 100%;
-      max-width: 600px;
+      max-width: 500px;
       color: #fff9e6;
+      font-size: 16px;
     }
 
     .section img.qr {
-      width: 120px;
-      margin-top: 10px;
+      width: 90px;
+      margin-top: 6px;
       background: white;
       border-radius: 10px;
-      padding: 6px;
+      padding: 4px;
     }
 
     .kaftans-logo {
-      width: 160px;
-      margin-bottom: 12px;
+      width: 120px;
+      margin-bottom: 8px;
     }
 
     .highlight {
@@ -97,8 +92,7 @@
     }
 
     .footer {
-      margin-bottom: 10px;
-      font-size: 16px;
+      font-size: 12px;
       opacity: 0.7;
     }
   </style>
@@ -108,7 +102,7 @@
   <img class="logo" src="logo_casa_riva_bianco.png" alt="Logo Casa Riva" />
 
   <div class="container">
-    <div class="header">
+    <div>
       <h1>Benvenuto / Welcome</h1>
       <div class="clock"><span id="data"></span> | <span id="ora"></span></div>
       <div class="meteo" id="meteoAttuale">☁️ Caricamento meteo...</div>
