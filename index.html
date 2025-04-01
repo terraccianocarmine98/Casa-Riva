@@ -32,7 +32,7 @@
       z-index: 2;
       height: 100vh;
       width: 100vw;
-      padding: 20px;
+      padding: 20px 30px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -53,7 +53,7 @@
     h1 {
       font-size: 36px;
       font-weight: 300;
-      margin: 0 0 6px 0;
+      margin: 0 0 8px 0;
     }
 
     .clock, .meteo {
@@ -61,14 +61,22 @@
       margin: 2px 0;
     }
 
+    .sections {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 1000px;
+      gap: 20px;
+    }
+
     .section {
+      flex: 1;
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(5px);
       border-radius: 12px;
-      padding: 10px 16px;
-      width: 100%;
-      max-width: 500px;
+      padding: 14px 20px;
       color: #fff9e6;
       font-size: 16px;
     }
@@ -109,20 +117,22 @@
       <div class="meteo" id="meteoGiorni"></div>
     </div>
 
-    <div class="section">
-      <p><strong>Wi-Fi:</strong> Casa Riva Sorrento</p>
-      <p><strong>Password:</strong> Riva2025@</p>
-      <p><em>Scansiona il QR per connetterti / Scan QR to connect</em></p>
-      <img src="wifi_casa_riva_qr.png" alt="QR Wi-Fi" class="qr">
-    </div>
+    <div class="sections">
+      <div class="section">
+        <p><strong>Wi-Fi:</strong> Casa Riva Sorrento</p>
+        <p><strong>Password:</strong> Riva2025@</p>
+        <p><em>Scansiona il QR per connetterti<br>Scan QR to connect</em></p>
+        <img src="wifi_casa_riva_qr.png" alt="QR Wi-Fi" class="qr">
+      </div>
 
-    <div class="section">
-      <img src="LOGO_KELLE_CAPRI.png" alt="Logo Kelle' Kaftans" class="kaftans-logo">
-      <p><strong>Scopri la collezione esclusiva di Kaftani</strong></p>
-      <p class="highlight">30% di sconto</p>
-      <p>Consegna express in 24 ore direttamente al tuo alloggio</p>
-      <p><em>Scansiona il QR per visitare il nostro shop:</em></p>
-      <img src="kelle_kaftans_qr.png" alt="QR Kelle' Kaftans" class="qr">
+      <div class="section">
+        <img src="LOGO_KELLE_CAPRI.png" alt="Logo Kelle' Kaftans" class="kaftans-logo">
+        <p><strong>Scopri la collezione esclusiva di Kaftani</strong></p>
+        <p class="highlight">30% di sconto</p>
+        <p>Consegna express in 24 ore direttamente al tuo alloggio</p>
+        <p><em>Scansiona il QR per visitare il nostro shop</em></p>
+        <img src="kelle_kaftans_qr.png" alt="QR Kelle' Kaftans" class="qr">
+      </div>
     </div>
 
     <div class="footer">Casa Riva Sorrento ©</div>
